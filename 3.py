@@ -4,16 +4,22 @@ from typing import List
 
 # Разделяемое между запросами состояние сервера
 class SharedState:
+    """
+    Добавили asyncio.Lock(). Он работает аналогично threading.Lock и соответственно гарантирует работу выполнение
+    задачи согласно порядку без дата рейса. Добавили как атрибут класса, поскольку используем его в работе методов.
+    """
     items: List[int]
 
     def __init__(self):
         self.items = []
+        self.lock = asyncio.Lock()
 
     # функция, модифицирующая состояние сервера
     # asyncio.sleep используется для имитации долгой работы функции
     async def modify(self, value: int):
-        await asyncio.sleep(random.randint(1, 2))
-        self.items.append(value)
+        with self.lock:
+            await asyncio.sleep(random.randint(1, 2))
+            self.items.append(value)
 
 # Имитация сервера, обрабатывающего запросы
 # В нашем случае "запросы" модифицируют состояние сервера

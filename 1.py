@@ -21,7 +21,16 @@ def main():
     
     Важно: написать наиболее эффективный алгоритм (по числу итераций)
     """
-    # тут явно нужен алгоритм
+    # application of binary search. Algorithm complexity is O(log n)
+    left, right = 0, 1e7
+    while left < right:
+        mid = (left + right) // 2
+        if black_box(mid):
+            print(f"Volume of the book is {mid} pages")
+            return mid
+        else:
+            right = mid - 1
+
 
 if __name__ == '__main__':
     main()
