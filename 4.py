@@ -1,6 +1,5 @@
 import json
 import sys
-from pprint import pprint
 
 
 def count_questions(data: dict) -> None:
